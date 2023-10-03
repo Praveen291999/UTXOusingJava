@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.dvc.points.dto.PointsSummary;
 import com.dvc.points.dto.ReservationPoints;
 import com.dvc.points.exception.CustomException;
 import com.dvc.points.exception.ErrorObject;
@@ -39,6 +40,14 @@ public class PointsResourceImpl implements PointsResource {
 	}
 	
 	@Override
+	public PointsSummary sumOfUnspentPoints(int membershipId,int contractNumber,String pointsType) {
+		
+		return manager.getSumOfUnSpent(membershipId,contractNumber,pointsType);
+	}
+	
+	
+	
+	@Override
 	public ResponseEntity<ErrorObject> handleException(CustomException ex) {
 
 		ErrorObject eObject = new ErrorObject(HttpStatus.NOT_FOUND.value(), ex.getMessage(),
@@ -46,5 +55,7 @@ public class PointsResourceImpl implements PointsResource {
 
 		return new ResponseEntity<>(eObject, HttpStatus.NOT_FOUND);
 	}
+
+	
 
 }
